@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: MyBottomNavigationBar(selectedIndexNavBar: 0),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
