@@ -25,6 +25,10 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     ExerciseType(id: 'ru_6', description: 'Running, 5 mph (12 min/mile)'),
     ExerciseType(id: 'ru_7', description: 'Running, 5.2 mph (11.5 min/mile)'),
     ExerciseType(id: 'ru_8', description: 'Running, 6 mph (10 min/mile)'),
+    ExerciseType(id: 'sp_113', description: 'Volleyball'),
+    ExerciseType(id: 'sp_12', description: 'Billiards'),
+    ExerciseType(id: 'sp_29', description: 'Fencing'),
+    ExerciseType(id: 'sp_89', description: 'Rollerblading, in-line skating, 14.4 km/h (9.0 mph), recreational pace'),
   ];
 
   ExerciseType? _selectedExercise;

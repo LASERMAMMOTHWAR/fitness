@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/exercise': (context) => const ExerciseScreen(),
         '/user': (context) => const UpdateFitnessUserScreen(),
+        // '/more': (context) => const UpdateFitnessUserScreen(),
       },
     );
   }

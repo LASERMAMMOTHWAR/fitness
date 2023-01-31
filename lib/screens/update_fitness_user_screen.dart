@@ -160,6 +160,7 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                       ),
                     ),
                   ],),
+                  Text("Testr"),
                   Row(
                     children: [
                       Padding(
@@ -187,6 +188,7 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                       ),
                     ],
                   ),
+
                   Row(
                     children: [
                       Text("Goals"),

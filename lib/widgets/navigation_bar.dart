@@ -23,6 +23,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         case 2:
           Navigator.pushReplacementNamed(context, '/user');
           break;
+
+        // case 3:
+        //   Navigator.pushReplacement(context, '/more');
+
+        // case 4:
+        //   Navigator.pushReplacement(context, '/apps');
       }
     });
   }
@@ -44,6 +50,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           label: 'User',
           icon: Icon(Icons.person),
         ),
+        // BottomNavigationBarItem(
+        //   label: 'More',
+        //   icon: Icon(Icons.more_horiz),
+        // ),
       ],
       currentIndex: widget.selectedIndexNavBar,
       onTap: _onTap,
