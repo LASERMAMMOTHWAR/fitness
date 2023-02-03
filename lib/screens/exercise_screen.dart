@@ -32,11 +32,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       shrinkWrap: true,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context,index){
+                        final Exercise =snapshot.data!.docs[index];
                         QueryDocumentSnapshot doc = snapshot.data!.docs[index];
-                        return ListTile(
-                          title: Text(doc['description']),
-                          subtitle: Text("${doc['duration']} mins"),
-                          trailing: Text('${doc['burnedCalories']}'),
+                        return Dismissible(
+                          key: Key(doc.id),
+                          onDismissed: (direction){
+                            FirebaseCalls().deleteExercise(doc.id);
+                          },
+                          child: ListTile(
+                            onLongPress: () => FirebaseCalls().deleteExercise(doc.id),
+                            title: Text(doc['description']),
+                            subtitle: Text("${doc['duration']} mins"),
+                            trailing: Text('${doc['burnedCalories']}'),
+                          ),
                         );
                         // return Text(doc['description']);
                         },
@@ -67,6 +75,14 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   );
                 },
                 child: Text('Add Exercise'),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                child:const Text("Delete all Exercises") ,
+                onPressed: (){
+                },
               ),
             ),
           ],

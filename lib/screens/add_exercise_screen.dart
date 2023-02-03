@@ -35,52 +35,75 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(child: Text("Choose your activity: ")),
-            DropdownButton<ExerciseType>(
-              value: _selectedExercise,
-              items: _exercises
-                  .map(
-                    (desc) => DropdownMenuItem(
-                  value: desc,
-                  child: Text(desc.description),
+    return Container(
+        padding: const EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+        color: Colors.grey[800],
+        borderRadius: BorderRadius.only(
+        topRight: Radius.circular(20.0),
+        topLeft: Radius.circular(20.0),
+        ),
+        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Choose your activity: "),
+              SizedBox(height: 10,),
+              DropdownButton<ExerciseType>(
+                isExpanded: true,
+                underline: Container(
+                  height: 1,
+                  color: Colors.grey,
                 ),
-              )
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedExercise = value!;
-                });
-              },
+                value: _selectedExercise,
+                items: _exercises
+                    .map(
+                      (desc) => DropdownMenuItem(
+                    value: desc,
+                    child: Text(desc.description,),
+                  ),
+                )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedExercise = value!;
+                  });
+                },
+              ),
+            ],
+          ),
+          TextField(
+            textAlign: TextAlign.center,
+            decoration: const InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+                labelText: 'Duration',
             ),
-          ],
-        ),
-        TextField(
-          textAlign: TextAlign.center,
-          decoration: const InputDecoration(labelText: 'Duration'),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
-          controller: durationController,
-        ),
-        ElevatedButton(
-          child: const Text("ADD"),
-          onPressed: () async {
-            // if (durationController.text.runtimeType == String){
-            //   print("Test1111");
-            // }
-            double burned_calo = await ApiCalls().fetchBurnedCalories(_selectedExercise!.id, double.parse(durationController.text), fitnessUser.weight);
-            FirebaseCalls().addExercise(Exercise(id: _selectedExercise!.id, description: _selectedExercise!.description, duration: int.parse(durationController.text), burnedCalories: burned_calo));
-            Navigator.pop(context);
-            //TODO ApiCalls().fetchBurnedCalories()
-            //TODO FirebaseCalls().addExercise()
-          },
-        ),
-      ],
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            controller: durationController,
+          ),
+          ElevatedButton(
+            child: const Text("ADD"),
+            onPressed: () async {
+              // if (durationController.text.runtimeType == String){
+              //   print("Test1111");
+              // }
+              double burned_calo = await ApiCalls().fetchBurnedCalories(_selectedExercise!.id, double.parse(durationController.text), fitnessUser.weight);
+              FirebaseCalls().addExercise(Exercise(id: _selectedExercise!.id, description: _selectedExercise!.description, duration: int.parse(durationController.text), burnedCalories: burned_calo));
+              Navigator.pop(context);
+              //TODO ApiCalls().fetchBurnedCalories()
+              //TODO FirebaseCalls().addExercise()
+            },
+          ),
+        ],
+      ),
     );
   }
 }

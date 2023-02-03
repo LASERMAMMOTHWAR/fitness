@@ -134,33 +134,69 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                   // dropDownWidget(Value_: value_gender, list_select: genderList),
                   // dropDownWidget(Value_: value_activity, list_select: activityLevelList),
                   // dropDownWidget(Value_: value_goal, list_select: goalList),
-                  Row(
+                  SizedBox(height: 10,),
+                  Column(
                     children: [
                     Text("Gender"),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      child: DropdownButton<String>(
-                        hint: Text("Gender"),
-                        value: value_gender,
-                        underline: Container(
-                          height: 2,
-                          color: Colors.white,
-                        ),
-                        items: genderList
-                            .map((desc) => DropdownMenuItem(
-                          value: desc,
-                          child: Text(desc),
-                        ))
-                            .toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            value_gender = value!;
-                          });
-                        },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            child:Row(
+                              children: [
+                                Text("Male"),
+                                Radio(
+                                  value: "Male",
+                                  groupValue: value_gender,
+                                  onChanged: (value){
+                                    setState(() {
+                                      value_gender = value;
+                                    });
+                                  } ,),
+                              ],
+                            ) ,
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Female"),
+                                Radio(
+                                  value: "Female",
+                                  groupValue: value_gender,
+                                  onChanged: (value){
+                                    setState(() {
+                                      value_gender = value;
+                                    });
+                                  } ,),
+                              ],
+                            ),
+                          ),
+
+                        ],
                       ),
+                      // child: DropdownButton<String>(
+                      //   hint: Text("Gender"),
+                      //   value: value_gender,
+                      //   underline: Container(
+                      //     height: 1,
+                      //     color: Colors.white,
+                      //   ),
+                      //   items: genderList
+                      //       .map((desc) => DropdownMenuItem(
+                      //     value: desc,
+                      //     child: Text(desc),
+                      //   ))
+                      //       .toList(),
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       value_gender = value!;
+                      //     });
+                      //   },
+                      // ),
                     ),
                   ],),
-                  Text("Testr"),
                   Row(
                     children: [
                       Padding(
@@ -168,11 +204,10 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                           child: Text("Activity Level"),
                       ),
                       DropdownButton<String>(
-                        hint: Text("Activity Level"),
                         value: value_activity ,
                         underline: Container(
-                          height: 2,
-                          color: Colors.white,
+                          height: 1,
+                          color: Colors.grey,
                         ),
                         items: activityLevelList
                             .map((desc) => DropdownMenuItem(
@@ -195,11 +230,10 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                         child: DropdownButton<String>(
-                          hint: Text("Goals"),
                           value: value_goal,
                           underline: Container(
-                            height: 2,
-                            color: Colors.white,
+                            height: 1,
+                            color: Colors.grey,
                           ),
                           items: goalList
                               .map((desc) => DropdownMenuItem(
@@ -235,6 +269,7 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                       Navigator.pushReplacementNamed(context, '/home');
                     },
                   ),
+                  Text("* Activity Level (Intensity), the higher it is, the more calories burned"),
                 ],
               );
             },

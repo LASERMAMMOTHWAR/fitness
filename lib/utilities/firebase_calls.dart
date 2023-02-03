@@ -79,4 +79,8 @@ class FirebaseCalls {
 
     //TODO Add newExercise to exercises collection
   }
+
+  Future <void>deleteExercise(String id) async{
+    exercisesCollection.doc(id).delete();
+  }
 }
