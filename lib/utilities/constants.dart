@@ -26,3 +26,16 @@ const kBmi_info = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.bold,
 );
+
+const kCityTextStyle = TextStyle(
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+);
+
+const kDescriptionTextStyle = TextStyle(
+  fontSize: 16.0,
+);
+
+const kResultTextStyle = TextStyle(
+  fontSize: 20.0,
+);

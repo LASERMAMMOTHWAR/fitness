@@ -5,6 +5,8 @@ import '../models/bmi.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../models/weather.dart';
+
 class ApiCalls {
   Map<String, String> requestHeaders = {
     'X-RapidAPI-Host': 'fitness-calculator.p.rapidapi.com',
@@ -92,5 +94,19 @@ class ApiCalls {
     }
 
     //TODO
+  }
+
+
+  Future<Weather> fetchWeather(String city) async {
+    const apiKey = '5c0e46a0fddf4849a0aa1403daa7b169';
+    const baseURL = 'https://api.openweathermap.org/data/2.5/weather';
+    final response = await http
+        .get(Uri.parse('$baseURL?q=$city&appid=$apiKey&units=metric'));
+    if (response.statusCode == 200) {
+      print(jsonDecode(response.body));
+      return Weather.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load weather');
+    }
   }
 }

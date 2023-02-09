@@ -83,4 +83,8 @@ class FirebaseCalls {
   Future <void>deleteExercise(String id) async{
     exercisesCollection.doc(id).delete();
   }
+
+  Future<void>deleteAllExercises(String id) async{
+    exercisesCollection.doc(id).delete();
+  }
 }

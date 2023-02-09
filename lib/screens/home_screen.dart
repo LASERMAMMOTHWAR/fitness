@@ -1,8 +1,15 @@
+import 'package:fitness/models/model_theme.dart';
 import 'package:fitness/utilities/api_calls.dart';
 import 'package:flutter/material.dart';
 import  'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+
+
 import 'dart:async';
 
+import '../models/model_theme.dart';
+import '../utilities/mytheme_preferences.dart';
 import '../models/bmi.dart';
 import '../utilities/firebase_calls.dart';
 import '../widgets/navigation_bar.dart';
@@ -18,45 +25,52 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fitness'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              auth.signOut();
-              Navigator.pushReplacementNamed(context, '/');
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
-      bottomNavigationBar: MyBottomNavigationBar(selectedIndexNavBar: 0),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DateWidget(),
-              const Text(
-                  "Summary",
-                style: kTitle,
+    return Consumer<ModelTheme>(
+      builder: (context, ModelTheme themeNotifier, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Fitness'),
+            actions: [
+              IconButton(onPressed: (){
+                themeNotifier.isDark = !themeNotifier.isDark;
+              }, icon: Icon(Icons.wb_sunny)),
+              IconButton(
+                onPressed: () {
+                  auth.signOut();
+                  Navigator.pushReplacementNamed(context, '/');
+                },
+                icon: const Icon(Icons.logout),
               ),
-              Text(
-                'Welcome ${auth.currentUser?.displayName}',
-                style: kUserGreet,
-              ),
-              BMI_widget(),
-
-
-
-              //TODO widget to show bmi, health and healthyBmiRange
-              //TODO widget to show daily calorie requirement of user
             ],
           ),
-        ),
-      ),
+          bottomNavigationBar: MyBottomNavigationBar(selectedIndexNavBar: 0),
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DateWidget(),
+                  const Text(
+                      "Summary",
+                    style: kTitle,
+                  ),
+                  Text(
+                    'Welcome ${auth.currentUser?.displayName}',
+                    style: kUserGreet,
+                  ),
+                  BMI_widget(),
+
+
+
+                  //TODO widget to show bmi, health and healthyBmiRange
+                  //TODO widget to show daily calorie requirement of user
+                ],
+              ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

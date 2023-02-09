@@ -17,9 +17,18 @@ class UpdateFitnessUserScreen extends StatefulWidget {
 
 class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
   //TODO add gender, activityLevel, goal throughout this screen
+  final age_snackbar = SnackBar(
+    content: Text('Invalid Age!'),
+  );
+  final weight_snackbar = SnackBar(
+    content: Text('Invalid Weight!'),
+  );
+  final height_snackbar = SnackBar(
+    content: Text('Invalid Height!'),
+  );
   final List<String> genderList = <String>['Male', 'Female'];
   final List<String> activityLevelList = <String> ['1', '2', '3', '4', '5', '6'];
-  final List<String> goalList = <String> ['maintain', 'mildlose', 'weightlose', 'extremelose', 'mildgain', 'weightgain', 'extremegain'];
+  final List<String> goalList = <String> ['Maintain Weight', 'Mild Weight Loss', 'Weight Loss', 'Extreme Weight Loss', 'Mild Weight Gain', 'Weight Gain', 'Extreme Weight Gain'];
   final Map<String, String> gender =
   {
     'Male': 'male',
@@ -38,14 +47,20 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
 
   final Map<String, String> goal =
   {
-    'maintain': 'maintain weight',
-    'mildlose': 'Mild weight loss',
-    'weightlose': 'Weight loss',
-    'extremelose': 'Extreme weight loss',
-    'mildgain': 'Mild weight gain',
-    'weightgain': 'Weight gain',
-    'extremegain': 'Extreme weight gain',
+    'Maintain Weight': 'maintain weight',
+    'Mild Weight Loss': 'Mild weight loss',
+    'Weight Loss': 'Weight loss',
+    'Extreme Weight Loss': 'Extreme weight loss',
+    'Mild Weight Gain': 'Mild weight gain',
+    'Weight Gain': 'Weight gain',
+    'Extreme Weight Gain': 'Extreme weight gain',
   };
+
+  void getKeysFromMap(Map map){
+    map.keys.forEach((key) {
+      goalList.add(key);
+    });
+  }
 
 
 
@@ -255,18 +270,29 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                   ElevatedButton(
                     child: const Text('Save'),
                     onPressed: () {
-                      fitnessUser = FitnessUser(
-                        age: int.parse(ageController.text),
-                        weight: int.parse(weightController.text),
-                        height: int.parse(heightController.text),
-                        gender: gender[value_gender].toString(),
-                        // gender: dropDownWidget(Value_: value_gender, list_select: genderList).Value_.toString(),
-                        goal: goal[value_goal].toString(),
-                        activityLevel: activityLevel[value_activity].toString(),
+                      if ((int.parse(ageController.text) < 0 || int.parse(ageController.text) > 80)){
+                        ScaffoldMessenger.of(context).showSnackBar(age_snackbar);
+                      }
+                      else if (int.parse(weightController.text) < 40 || int.parse(weightController.text) > 160) {
+                        ScaffoldMessenger.of(context).showSnackBar(weight_snackbar);
+                      }
+                      else if (int.parse(heightController.text) < 130 || int.parse(heightController.text) > 230){
+                        ScaffoldMessenger.of(context).showSnackBar(height_snackbar);
+                      }
+                      else{
+                        fitnessUser = FitnessUser(
+                          age: int.parse(ageController.text),
+                          weight: int.parse(weightController.text),
+                          height: int.parse(heightController.text),
+                          gender: gender[value_gender].toString(),
+                          // gender: dropDownWidget(Value_: value_gender, list_select: genderList).Value_.toString(),
+                          goal: goal[value_goal].toString(),
+                          activityLevel: activityLevel[value_activity].toString(),
 
-                      );
-                      FirebaseCalls().updateFitnessUser(fitnessUser);
-                      Navigator.pushReplacementNamed(context, '/home');
+                        );
+                        FirebaseCalls().updateFitnessUser(fitnessUser);
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
                     },
                   ),
                   Text("* Activity Level (Intensity), the higher it is, the more calories burned"),

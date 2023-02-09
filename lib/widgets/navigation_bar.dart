@@ -24,11 +24,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           Navigator.pushReplacementNamed(context, '/user');
           break;
 
-        // case 3:
-        //   Navigator.pushReplacement(context, '/more');
-
-        // case 4:
-        //   Navigator.pushReplacement(context, '/apps');
+        case 3:
+          Navigator.pushReplacementNamed(context, '/more');
+          break;
       }
     });
   }
@@ -36,24 +34,29 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: Colors.blueGrey,
-      items: const [
+      selectedItemColor: Colors.cyanAccent,
+      // backgroundColor: Colors.blue,
+      items:  [
         BottomNavigationBarItem(
+          backgroundColor: Colors.blueGrey,
           label: 'Home',
           icon: Icon(Icons.home),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Colors.blueGrey,
           label: 'Exercise',
           icon: Icon(Icons.directions_run),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Colors.blueGrey,
           label: 'User',
           icon: Icon(Icons.person),
         ),
-        // BottomNavigationBarItem(
-        //   label: 'More',
-        //   icon: Icon(Icons.more_horiz),
-        // ),
+        BottomNavigationBarItem(
+          backgroundColor: Colors.blueGrey,
+          label: 'More',
+          icon: Icon(Icons.more_horiz, ),
+        ),
       ],
       currentIndex: widget.selectedIndexNavBar,
       onTap: _onTap,
