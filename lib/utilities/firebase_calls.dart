@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../utilities/api_calls.dart';
 import '../models/fitness_user.dart';
 import '../models/exercise.dart';
 
+
 late FitnessUser fitnessUser;
+
 
 FirebaseAuth auth = FirebaseAuth.instance;
 CollectionReference fitnessUsersCollection =
@@ -69,7 +72,7 @@ class FirebaseCalls {
         .get();
 
 
-     exercisesCollection.add({
+     await exercisesCollection.add({
       'id': newExercise.id,
       'description': newExercise.description,
       'duration': newExercise.duration,
@@ -84,7 +87,27 @@ class FirebaseCalls {
     exercisesCollection.doc(id).delete();
   }
 
-  Future<void>deleteAllExercises(String id) async{
-    exercisesCollection.doc(id).delete();
+  Future<void>deleteAllExercises() async{
+    QuerySnapshot querySnap = await exercisesCollection
+        .where('userid', isEqualTo: auth.currentUser?.uid)
+        .get();
+
+    for (DocumentSnapshot ds in querySnap.docs){
+      ds.reference.delete();
+    }
+  }
+  
+  Future<double>totalCalories()async{
+    double total_calorie = 0;
+    QuerySnapshot querySnap = await exercisesCollection
+        .where('userid', isEqualTo: auth.currentUser?.uid)
+        .get();
+
+    for (DocumentSnapshot ds in querySnap.docs){
+      total_calorie += ds.get("burnedCalories");
+    }
+    double daily_calo = await ApiCalls().fetchDailyCalorie(fitnessUser);
+    double cal_ = total_calorie/daily_calo;
+    return cal_;
   }
 }

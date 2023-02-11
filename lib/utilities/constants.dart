@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
 
-const kTitle = TextStyle(
-  fontSize: 40,
-  color: Colors.red,
-);
+kTitle(bool isDark) {
+  if (isDark){
+    return TextStyle(
+      fontSize: 40,
+      color: Colors.red,
+    );
+  } else{
+    return TextStyle(
+      fontSize: 40,
+      color: Colors.red[900],
+    );
+  }
+}
 
 const kDate = TextStyle(
   color: Colors.grey,
@@ -15,27 +24,75 @@ const kUserGreet = TextStyle(
 
 );
 
-const kDaily_calo = TextStyle(
-  fontSize: 25,
-  color: Colors.red,
-  fontWeight: FontWeight.bold,
-);
+kDaily_calo(bool isDark) {
+  if (isDark){
+    return TextStyle(
+      fontSize: 25,
+      color: Colors.red,
+      fontWeight: FontWeight.bold,
+    );
+  } else{
+    return TextStyle(
+      fontSize: 25,
+      color: Colors.red[900],
+      fontWeight: FontWeight.bold,
+    );
+  }
+}
 
-const kBmi_info = TextStyle(
-  color: Colors.grey,
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-);
+kBmi_info(bool isDark){
+  if (isDark){
+    return TextStyle(
+      color: Colors.grey,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    );
+  } else{
+    return TextStyle(
+      color: Colors.grey[900],
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    );
+  }
+}
 
-const kCityTextStyle = TextStyle(
-  fontSize: 20.0,
-  fontWeight: FontWeight.bold,
-);
+kCityTextStyle(bool isDark){
+  if (isDark){
+    return TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    );
+  } else{
+    return TextStyle(
+      fontSize: 20.0,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    );
+  }
+}
 
-const kDescriptionTextStyle = TextStyle(
-  fontSize: 16.0,
-);
+kDescriptionTextStyle(bool isDark){
+  if (isDark){
+    return TextStyle(
+      fontSize: 16.0,
+    );
+  } else{
+    return TextStyle(
+      color: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+}
 
-const kResultTextStyle = TextStyle(
-  fontSize: 20.0,
-);
+kResultTextStyle(bool isDark){
+  if (isDark){
+    return TextStyle(
+      fontSize: 20.0,
+    );
+  } else{
+    return TextStyle(
+      color: Colors.white,
+      fontSize: 20.0,
+    );
+  }
+}

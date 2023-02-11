@@ -82,6 +82,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               child: ElevatedButton(
                 child:const Text("Delete all Exercises") ,
                 onPressed: (){
+                  FirebaseCalls().deleteAllExercises();
                 },
               ),
             ),

@@ -109,4 +109,16 @@ class ApiCalls {
       throw Exception('Failed to load weather');
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
 }

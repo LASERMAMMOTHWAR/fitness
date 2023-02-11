@@ -2,6 +2,7 @@ import 'package:fitness/models/model_theme.dart';
 import 'package:fitness/utilities/api_calls.dart';
 import 'package:flutter/material.dart';
 import  'package:intl/intl.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 
@@ -15,25 +16,36 @@ import '../utilities/firebase_calls.dart';
 import '../widgets/navigation_bar.dart';
 import '../utilities/constants.dart';
 
+
+
+
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+
+
+
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final congrats_snackbar = SnackBar(
+    content: Text('Congrats on Completeing your Goal!'),
+  );
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
       builder: (context, ModelTheme themeNotifier, child) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: !themeNotifier.isDark ? Colors.blue[900] : Colors.black12,
             title: const Text('Fitness'),
             actions: [
               IconButton(onPressed: (){
                 themeNotifier.isDark = !themeNotifier.isDark;
-              }, icon: Icon(Icons.wb_sunny)),
+              }, icon: Icon(themeNotifier.isDark ? Icons.nightlight_round : Icons.wb_sunny)),
               IconButton(
                 onPressed: () {
                   auth.signOut();
@@ -51,20 +63,61 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DateWidget(),
-                  const Text(
+                  Text(
                       "Summary",
-                    style: kTitle,
+                    style: kTitle(themeNotifier.isDark),
                   ),
                   Text(
                     'Welcome ${auth.currentUser?.displayName}',
                     style: kUserGreet,
                   ),
-                  BMI_widget(),
+                  BMI_widget(Themeis_dark: themeNotifier.isDark),
+                  FutureBuilder(
+                    future: FirebaseCalls().totalCalories(),
+                    builder: (context, snapshot){
+                      if (snapshot.hasData)  {
+                        double value_ = snapshot.data!;
+                        if (value_ > 1){
+                          return Container(
+                            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Column(
+                              children: [
+                                LinearPercentIndicator(
+                                  width: MediaQuery.of(context).size.width - 50,
+                                  animation: true,
+                                  lineHeight: 20.0,
+                                  animationDuration: 2000,
+                                  percent: 1,
+                                  center: Text("100%"),
+                                  progressColor: Colors.greenAccent,
+                                ),
+                                Text("Congrats on Completeing your Goals!")
+                              ],
+                            ),
+                          );
 
+                        } else{
+                          return Container(
+                            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: LinearPercentIndicator(
+                              width: MediaQuery.of(context).size.width - 20,
+                              animation: true,
+                              lineHeight: 20.0,
+                              animationDuration: 2000,
+                              percent: value_,
+                              center: Text("${(value_*100).toStringAsFixed(2)}%"),
+                              progressColor: Colors.greenAccent,
+                            ),
+                          );
+                        }
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  ),
 
 
                   //TODO widget to show bmi, health and healthyBmiRange
-                  //TODO widget to show daily calorie requirement of user
+                  // TODO widget to show daily calorie requirement of user
                 ],
               ),
             ),
@@ -111,21 +164,20 @@ class _DateWidgetState extends State
   }
 }
 
-class BMI_widget extends StatefulWidget {
-  const BMI_widget({Key? key}) : super(key: key);
+class BMI_widget extends StatelessWidget {
+   BMI_widget({Key? key,
+    required this.Themeis_dark,
+  }) : super(key: key);
 
-  @override
-  State<BMI_widget> createState() => _BMI_widgetState();
-}
+   bool Themeis_dark;
 
-class _BMI_widgetState extends State<BMI_widget> {
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: Themeis_dark ? Colors.grey[800]: Colors.grey[600],
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -149,7 +201,7 @@ class _BMI_widgetState extends State<BMI_widget> {
                     ),
                     Text(
                       '${snapshot.data!.bmi}',
-                      style: kBmi_info,
+                      style: kBmi_info(Themeis_dark),
                     ),
                     SizedBox(height: 10,),
                     const Text(
@@ -157,7 +209,7 @@ class _BMI_widgetState extends State<BMI_widget> {
                     ),
                     Text(
                       snapshot.data!.health,
-                      style: kBmi_info,
+                      style: kBmi_info(Themeis_dark),
                     ),
                     SizedBox(height: 10,),
                     const Text(
@@ -165,7 +217,7 @@ class _BMI_widgetState extends State<BMI_widget> {
                     ),
                     Text(
                       snapshot.data!.healthyBmiRange,
-                      style: kBmi_info,
+                      style: kBmi_info(Themeis_dark),
                     ),
 
                   ],
@@ -185,7 +237,7 @@ class _BMI_widgetState extends State<BMI_widget> {
                     Text("Daily Calorie is: "),
                     Text(
                       '${snapshot.data!.toStringAsFixed(2)}',
-                      style: kDaily_calo,
+                      style: kDaily_calo(Themeis_dark),
                     ),
                     SizedBox(height: 10,),
                   ],
@@ -193,7 +245,9 @@ class _BMI_widgetState extends State<BMI_widget> {
               }
               return CircularProgressIndicator();
             },
-          )
+          ),
+
+
         ],
       ),
     );

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fitness/models/model_theme.dart';
+import 'package:provider/provider.dart';
+
 
 class MyBottomNavigationBar extends StatefulWidget {
   MyBottomNavigationBar({Key? key, required this.selectedIndexNavBar})
@@ -33,33 +36,37 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedItemColor: Colors.cyanAccent,
-      // backgroundColor: Colors.blue,
-      items:  [
-        BottomNavigationBarItem(
-          backgroundColor: Colors.blueGrey,
-          label: 'Home',
-          icon: Icon(Icons.home),
-        ),
-        BottomNavigationBarItem(
-          backgroundColor: Colors.blueGrey,
-          label: 'Exercise',
-          icon: Icon(Icons.directions_run),
-        ),
-        BottomNavigationBarItem(
-          backgroundColor: Colors.blueGrey,
-          label: 'User',
-          icon: Icon(Icons.person),
-        ),
-        BottomNavigationBarItem(
-          backgroundColor: Colors.blueGrey,
-          label: 'More',
-          icon: Icon(Icons.more_horiz, ),
-        ),
-      ],
-      currentIndex: widget.selectedIndexNavBar,
-      onTap: _onTap,
+    return Consumer<ModelTheme>(
+      builder: (context, ModelTheme themeNotifier, child) {
+        return BottomNavigationBar(
+          selectedItemColor: themeNotifier.isDark ? Colors.cyanAccent : Colors.white,
+          // backgroundColor: Colors.blue,
+          items:  [
+            BottomNavigationBarItem(
+              backgroundColor: themeNotifier.isDark ? Colors.blueGrey: Colors.blue,
+              label: 'Home',
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blueGrey,
+              label: 'Exercise',
+              icon: Icon(Icons.directions_run),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blueGrey,
+              label: 'User',
+              icon: Icon(Icons.person),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blueGrey,
+              label: 'More',
+              icon: Icon(Icons.more_horiz, ),
+            ),
+          ],
+          currentIndex: widget.selectedIndexNavBar,
+          onTap: _onTap,
+        );
+      }
     );
   }
 }
