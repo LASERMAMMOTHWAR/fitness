@@ -16,6 +16,7 @@ class check_weather extends StatelessWidget {
     return Consumer<ModelTheme>(
       builder: (context, ModelTheme themeNotifier, child) {
         return Container(
+          height: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
             color: themeNotifier.isDark ? Colors.grey[800]: Colors.grey[900],

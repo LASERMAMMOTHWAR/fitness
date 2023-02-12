@@ -21,6 +21,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(15, 10, 0, 10),
+                  child: Text("Activity Name:", style: TextStyle(), textAlign: TextAlign.center,),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Text("Burned Calories: "),
+                )
+              ],
+            ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: exercisesCollection.where('userid', isEqualTo: auth.currentUser?.uid).snapshots(),
@@ -57,33 +70,36 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             ),
             //TODO StreamBuilder to show documents in exercises collection
             Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SingleChildScrollView(
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: AddExerciseScreen(),
-                        ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: MediaQuery.of(context).viewInsets.bottom),
+                              child: AddExerciseScreen(),
+                            ),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-                child: Text('Add Exercise'),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                child:const Text("Delete all Exercises") ,
-                onPressed: (){
-                  FirebaseCalls().deleteAllExercises();
-                },
+                    style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                    child: Text('Add Exercise'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                    child:const Text("Delete all Exercises") ,
+                    onPressed: (){
+                      FirebaseCalls().deleteAllExercises();
+                    },
+                  ),
+                ],
               ),
             ),
           ],

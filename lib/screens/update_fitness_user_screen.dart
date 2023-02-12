@@ -267,33 +267,45 @@ class _UpdateFitnessUserScreenState extends State<UpdateFitnessUserScreen> {
                   ),
 
 
-                  ElevatedButton(
-                    child: const Text('Save'),
-                    onPressed: () {
-                      if ((int.parse(ageController.text) < 0 || int.parse(ageController.text) > 80)){
-                        ScaffoldMessenger.of(context).showSnackBar(age_snackbar);
-                      }
-                      else if (int.parse(weightController.text) < 40 || int.parse(weightController.text) > 160) {
-                        ScaffoldMessenger.of(context).showSnackBar(weight_snackbar);
-                      }
-                      else if (int.parse(heightController.text) < 130 || int.parse(heightController.text) > 230){
-                        ScaffoldMessenger.of(context).showSnackBar(height_snackbar);
-                      }
-                      else{
-                        fitnessUser = FitnessUser(
-                          age: int.parse(ageController.text),
-                          weight: int.parse(weightController.text),
-                          height: int.parse(heightController.text),
-                          gender: gender[value_gender].toString(),
-                          // gender: dropDownWidget(Value_: value_gender, list_select: genderList).Value_.toString(),
-                          goal: goal[value_goal].toString(),
-                          activityLevel: activityLevel[value_activity].toString(),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    height: 30,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.blue)
+                              )
+                          )
+                      ),
+                      child: const Text('Save', style: TextStyle(fontSize: 25),),
+                      onPressed: () {
+                        if ((int.parse(ageController.text) < 0 || int.parse(ageController.text) > 80)){
+                          ScaffoldMessenger.of(context).showSnackBar(age_snackbar);
+                        }
+                        else if (int.parse(weightController.text) < 40 || int.parse(weightController.text) > 160) {
+                          ScaffoldMessenger.of(context).showSnackBar(weight_snackbar);
+                        }
+                        else if (int.parse(heightController.text) < 130 || int.parse(heightController.text) > 230){
+                          ScaffoldMessenger.of(context).showSnackBar(height_snackbar);
+                        }
+                        else{
+                          fitnessUser = FitnessUser(
+                            age: int.parse(ageController.text),
+                            weight: int.parse(weightController.text),
+                            height: int.parse(heightController.text),
+                            gender: gender[value_gender].toString(),
+                            // gender: dropDownWidget(Value_: value_gender, list_select: genderList).Value_.toString(),
+                            goal: goal[value_goal].toString(),
+                            activityLevel: activityLevel[value_activity].toString(),
 
-                        );
-                        FirebaseCalls().updateFitnessUser(fitnessUser);
-                        Navigator.pushReplacementNamed(context, '/home');
-                      }
-                    },
+                          );
+                          FirebaseCalls().updateFitnessUser(fitnessUser);
+                          Navigator.pushReplacementNamed(context, '/home');
+                        }
+                      },
+                    ),
                   ),
                   Text("* Activity Level (Intensity), the higher it is, the more calories burned"),
                 ],
@@ -310,69 +322,4 @@ String find_key_value(Map<String, String> maps, String data){
   var key = maps.keys.firstWhere((k) => maps[k] == data);
   return key;
 }
-//
-// class dropDownWidget extends StatefulWidget {
-//   dropDownWidget({Key? key,
-//     required this.Value_,
-//     required this.list_select,
-//
-//   }) : super(key: key);
-//
-//   String? Value_;
-//   List<String> list_select;
-//
-//   @override
-//   State<dropDownWidget> createState() => _dropDownWidgetState();
-// }
-//
-// class _dropDownWidgetState extends State<dropDownWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return DropdownButton(
-//         value: widget.Value_ ?? widget.list_select.first,
-//         items: widget.list_select.map((Map_info) => DropdownMenuItem(
-//           value: Map_info,
-//           child: Text(Map_info),
-//         )).toList(),
-//       onChanged: (value){
-//           setState(() {
-//             widget.Value_ = value!;
-//           });
-//       },
-//
-//     );
-//   }
-// }
 
-
-
-
-
-// DropdownButton<String>(
-//   value: value_gender ?? genderList.first,
-//   items: genderList.map((desc) => DropdownMenuItem(value: desc, child: Text(desc),)).toList(),
-//   onChanged: (value){
-//     setState(() {
-//       value_gender = value!;
-//     });
-//   },
-// ),
-// DropdownButton<String>(
-//   value: value_activity ?? activityLevelList.first,
-//   items: activityLevelList.map((desc) => DropdownMenuItem(value: desc, child: Text(desc),)).toList(),
-//   onChanged: (value){
-//     setState(() {
-//       value_activity = value!;
-//     });
-//   },
-// ),
-// DropdownButton<String>(
-//   value: value_goal ?? goalList.first,
-//   items: goalList.map((desc) => DropdownMenuItem(value: desc, child: Text(desc),)).toList(),
-//   onChanged: (value){
-//     setState(() {
-//       value_goal = value!;
-//       print(value_goal);
-//     });
-//   },
-// ),

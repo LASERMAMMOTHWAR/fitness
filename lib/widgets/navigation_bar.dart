@@ -39,26 +39,26 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     return Consumer<ModelTheme>(
       builder: (context, ModelTheme themeNotifier, child) {
         return BottomNavigationBar(
-          selectedItemColor: themeNotifier.isDark ? Colors.cyanAccent : Colors.white,
+          selectedItemColor: themeNotifier.isDark ? Colors.cyanAccent : Colors.cyan,
           // backgroundColor: Colors.blue,
           items:  [
             BottomNavigationBarItem(
-              backgroundColor: themeNotifier.isDark ? Colors.blueGrey: Colors.blue,
+              backgroundColor: themeNotifier.isDark ? Colors.blueGrey: Colors.blue[900],
               label: 'Home',
               icon: Icon(Icons.home),
             ),
             BottomNavigationBarItem(
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: themeNotifier.isDark ? Colors.blueGrey: Colors.blue[900],
               label: 'Exercise',
               icon: Icon(Icons.directions_run),
             ),
             BottomNavigationBarItem(
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: themeNotifier.isDark ? Colors.blueGrey: Colors.blue[900],
               label: 'User',
               icon: Icon(Icons.person),
             ),
             BottomNavigationBarItem(
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: themeNotifier.isDark ? Colors.blueGrey: Colors.blue[900],
               label: 'More',
               icon: Icon(Icons.more_horiz, ),
             ),
