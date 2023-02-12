@@ -90,7 +90,7 @@ class _AdditionalScreenState extends State<AdditionalScreen> {
                                     return SingleChildScrollView(
                                       child: Container(
                                         padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context).size.width),
+                                            bottom: MediaQuery.of(context).viewInsets.bottom),
                                         child: Food_website(),
                                       ),
                                     );
